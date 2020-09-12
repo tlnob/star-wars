@@ -1,0 +1,77 @@
+{% extends "base_layout.html" %}
+
+{% block style %}
+table, th, td {
+    border: 0.5px solid gray;
+    border-collapse: collapse;
+  }
+
+  th, td {
+    padding: 15px;
+  }
+
+  th {
+    text-align: left;
+  }
+
+{% endblock %}
+
+{% block content %}
+
+<div class="">
+  <form action="" method="post">
+    <label for="type">Escolha um filtro:</label>
+    <tr>
+      <td>
+        <select name="type">
+          <option value="name"   selected="name">nome</option>
+          <option value="gender" selected="gender">gênero</option>
+          <option value="mass"   selected="mass">peso</option>
+          <option value="height" selected="height">altura</option>
+        </select>
+      </td>
+  </tr>
+    <p>
+        <label for="filter">Filtro</label>
+        <input type="text" name="filter">
+    </p>
+    <p>
+        <input type="submit">
+    </p>
+</form>
+  <div class="switch">
+
+      <table style="width:100%;">
+          <tr>
+              <th>name</th>
+              <th>height</th>
+              <th>mass</th>
+              <th>hair_color</th>
+              <th>skin_color</th>
+              <th>eye_color</th>
+              <th>birth_year</th>
+              <th>gender</th>
+              <th>homeworld</th>
+              <th>films</th>
+          </tr>
+          {% for char in character %}
+          <tr>
+          <th>{{char.name}} </th>
+          <th>{{char.height}} </th>
+          <th>{{char.mass}} </th>
+          <th>{{char.hair_color}} </th>
+          <th>{{char.skin_color}} </th>
+          <th>{{char.eye_color}} </th>
+          <th>{{char.birth_year}} </th>
+          <th>{{char.gender}} </th>
+          <th>{{char.homeworld}} </th>
+          <th>{{char.films}} </th>
+          </tr>
+          {% endfor %}
+      </ul>
+
+  </div>
+</div>
+
+
+{% endblock %}
