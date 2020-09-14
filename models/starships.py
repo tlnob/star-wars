@@ -15,3 +15,12 @@ class Starships(me.Document):
     MGLT = me.StringField(required=True)
     starship_class = me.StringField(required=True)
     calc = me.FloatField(required=True)
+    url = me.StringField(required=True)
+
+    @classmethod
+    def get_by_url(cls, url):
+        return cls.objects(url=url)
+
+    @classmethod
+    def get_by_name(cls, name):
+        return cls.objects(url=name)
