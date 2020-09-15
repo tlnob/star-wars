@@ -63,20 +63,18 @@ def populate_db():
                 populate_vehicles_db(data["vehicles"])
                 populate_films_db(data["films"])
                 populate_planets_db(data["homeworld"])
-                Character(
-                    person_id=index,
-                    name=data["name"],
-                    height=data["height"],
-                    mass=data["mass"],
-                    birth_year=data["birth_year"],
-                    gender=data["gender"],
-                    homeworld=data["homeworld"],
-                    url=data["url"],
-                    films=[Films.get_by_url(film).to_json() for film in data["films"]],
-                    starships= [Starships.get_by_url(starship).to_json() for starship in data["starships"]],
-                    vehicles=[Vehicles.get_by_url(vehicle).to_json() for vehicle in data["vehicles"]],
-                    planets= [Planets.get_by_url(data["homeworld"]).to_json()]
-                ).save()
+                Character.add(
+                    data["name"],
+                    data["height"],
+                    data["mass"],
+                    data["birth_year"],
+                    data["gender"],
+                    data["url"],
+                    data["films"],
+                    data["starships"],
+                    data["vehicles"],
+                    data["homeworld"]
+                )
     except ConnectionAbortedError:
         print("Invalid id") 
 
@@ -95,7 +93,6 @@ def populate_films_db(films):
     except ConnectionAbortedError: 
         print("Invalid id")   
 
-
 def populate_starship_db(starships):
     try:
         for starship in starships:
@@ -105,8 +102,9 @@ def populate_starship_db(starships):
                 json.dumps(data)
                 try:
                     cost = float(data["cost_in_credits"])    
+                    calc = float(data["hyperdrive_rating"]) / cost
                 except ValueError:
-                    cost = 1
+                    calc = 0
                 Starships.objects(name=data["name"]).update_one(
                     model=data["model"],
                     manufacturer=data["manufacturer"],
@@ -120,7 +118,7 @@ def populate_starship_db(starships):
                     hyperdrive_rating=data["hyperdrive_rating"],
                     MGLT=data["MGLT"],
                     starship_class=data["starship_class"],
-                    calc=round(float(data["hyperdrive_rating"]) / cost , 2),
+                    calc= calc,
                     url=data["url"],
                     upsert=True
                 )
@@ -129,7 +127,7 @@ def populate_starship_db(starships):
 
 @app.route('/starships', methods=['GET'])
 def get_starships():
-    starships = Starships.objects.order_by('-score')
+    starships = Starships.objects.order_by('-calc')
     return render_template('starships.html', starships=starships)
 
 @app.route('/db', methods=['GET'])
@@ -142,7 +140,9 @@ def get_characters(page):
     if request.method == 'POST':
         key_type = request.form.get('type')
         value = request.form.get('filter')
-        if key_type == "films":
+        if value == "":
+            return render_template('characters.html', character=paginate(page), filtered=True, page=page)
+        if key_type == "films": 
             character = Character.objects(films__icontains=value)
         elif key_type == "starships":
             character = Character.objects(starships__icontains=value)
@@ -150,11 +150,10 @@ def get_characters(page):
             character = Character.objects(vehicles__icontains=value)
         elif key_type == "planets":
             character = Character.objects(planets__icontains=value)
-        character = character.order_by('name', 'gender', 'mass', 'height')
         
         return render_template('characters.html', character=character, filtered=True, page=page)
-    character=paginate(page)
-    return render_template('characters.html', character=character, filtered=False, page=page)
+
+    return render_template('characters.html', character=paginate(page), filtered=False, page=page)
 
 if __name__ == '__main__':
     init_db()
