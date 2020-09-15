@@ -1,0 +1,116 @@
+{% extends "base_layout.html" %}
+
+{% block style %}
+table, th, td {
+    border: 0.5px solid gray;
+    border-collapse: collapse;
+    
+  }
+
+
+  th, td {
+    padding: 15px;
+  }
+
+
+
+  .table-header{
+    font-weight: bold;
+    color: yellow;
+  }
+
+  th {
+    text-align: center;
+    font-weight: normal;
+  }
+
+  form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+    width: 500px;
+  }
+
+  div > form {
+
+  }
+
+  input {
+    margin: 5px;
+  }
+
+  label {
+    margin: 5px
+  }
+
+  select {
+    width: 120px;
+  }
+
+  a {
+    color: white;
+    text-size: 15px;
+  }
+
+{% endblock %}
+
+{% block content %}
+
+<div class="">
+  <div>
+    <p>Find by Starship name: X-wing, Imperial shuttle</p>
+    <p>Find by Vehicle name: Imperial Speeder Bike, Snowspeeder, Tribubble bongo</p>
+    <p>Find by Planet name: Tatooine, Naboo, Naboo</p>
+    <p>Find by Film name: The Phantom Menace, Revenge of the Sith</p>
+  <form class="form" action="" method="post">
+    <div class="select-box">
+      <label for="type">filter</label>
+      <tr>
+        <td>
+          <select name="type">
+            <option value="films"   selected="films">films</option>
+            <option value="starships" selected="starships">starships</option>
+            <option value="vehicles"   selected="vehicles">vehicles</option>
+            <option value="planets" selected=planets">planets</option>
+          </select>
+        </td>
+    </tr>
+  </div>
+    <div class="input-submit">
+        <input type="text" name="filter">
+        <input type="submit">
+    </div>
+    <div>
+        {% if filtered %}
+          <a href="/">show all</a>
+        {% endif %}
+    </div>
+</form>
+</div>
+  <div class="switch">
+      <table style="width:100%;">
+          <tr class="table-header">
+              <th>name</th>
+              <th>height</th>
+              <th>mass</th>
+              <th>gender</th>
+          </tr>
+          {% for char in character %}
+          <tr>
+            <th>{{char.name}} </th>
+            <th>{{char.height}} </th>
+            <th>{{char.mass}} </th>
+            <th>{{char.gender}} </th>
+          </tr>
+          {% endfor %}
+      {%if character %}
+      <a href="/{{page | int + 1}}">see page {{page | int + 1}}</a>
+      {% endif %}
+      
+  </div>
+</div>
+
+
+{% endblock %}
