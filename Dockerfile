@@ -19,4 +19,4 @@ RUN pip3 install --upgrade pip
 
 RUN cat requirements.txt
 RUN pip3 install -r requirements.txt
-EXPOSE 5000 5001
+EXPOSE 5000
