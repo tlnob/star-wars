@@ -6,15 +6,17 @@ from models import *
 
 app = Flask(__name__)
 
-connect('star-wars-app')
+def init_db():
+    connection = connect('star-wars-app')
+    return connection
 
-@app.route('/db', methods=['GET'])
-def db():
-    get_vehicles()
-    get_planets()
-    populate_db()
-    populate_starship_db()
+def paginate(page_num):
+    print(page_num.isdigit())
+    page_num = int(page_num)
+    skips = 10 * (int(page_num) - 1)
 
+    cursor = Character.objects.order_by('name', 'gender', 'mass', 'height').skip(skips).limit(10)
+    return [x for x in cursor]
 
 def populate_planets_db(planets):
     try:
@@ -130,11 +132,13 @@ def get_starships():
     starships = Starships.objects.order_by('-score')
     return render_template('starships.html', starships=starships)
 
-@app.route('/', methods=['GET', 'POST'])
-def get_characters():
-    if (len(Character.objects) == 0):
-        populate_db()
-        print("populating db...")
+@app.route('/db', methods=['GET'])
+def db():
+    populate_db()
+    return Character.objects.to_json()
+
+@app.route('/<page>', methods=['GET', 'POST'])
+def get_characters(page):
     if request.method == 'POST':
         key_type = request.form.get('type')
         value = request.form.get('filter')
@@ -146,13 +150,12 @@ def get_characters():
             character = Character.objects(vehicles__icontains=value)
         elif key_type == "planets":
             character = Character.objects(planets__icontains=value)
-        # character = character.order_by('name', 'gender', 'mass', 'height')
-        return render_template('characters.html', character=character, filtered=True)
-
-    character = Character.get_all().order_by('name', 'gender', 'mass', 'height')
-    return render_template('characters.html', character=character, filtered=False)
-
-
+        character = character.order_by('name', 'gender', 'mass', 'height')
+        
+        return render_template('characters.html', character=character, filtered=True, page=page)
+    character=paginate(page)
+    return render_template('characters.html', character=character, filtered=False, page=page)
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0')
+    init_db()
+    app.run(debug=True,host='0.0.0.0', port=5000)

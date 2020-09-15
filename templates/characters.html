@@ -49,6 +49,11 @@ table, th, td {
     width: 120px;
   }
 
+  a {
+    color: white;
+    text-size: 15px;
+  }
+
 {% endblock %}
 
 {% block content %}
@@ -85,7 +90,6 @@ table, th, td {
 </form>
 </div>
   <div class="switch">
-
       <table style="width:100%;">
           <tr class="table-header">
               <th>name</th>
@@ -101,8 +105,10 @@ table, th, td {
             <th>{{char.gender}} </th>
           </tr>
           {% endfor %}
-      </ul>
-
+      {%if character %}
+      <a href="/{{page | int + 1}}">see page {{page | int + 1}}</a>
+      {% endif %}
+      
   </div>
 </div>
 
