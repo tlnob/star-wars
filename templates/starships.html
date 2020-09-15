@@ -1,18 +1,7 @@
 {% extends "base_layout.html" %}
 
 {% block style %}
-table, th, td {
-    border: 0.5px solid gray;
-    border-collapse: collapse;
-  }
 
-  th, td {
-    padding: 15px;
-  }
-
-  th {
-    text-align: left;
-  }
 
 {% endblock %}
 
@@ -22,34 +11,28 @@ table, th, td {
   <div class="switch">
 
       <table style="width:100%;">
-          <tr>
+          <tr class="table-header">
             <th>name</th>
             <th>model</th>
-            <th>manufacturer</th>
             <th>cost_in_credits</th>
             <th>length</th>
             <th>max_atmosphering_speed</th>
             <th>crew</th>
             <th>passengers</th>
-            <th>cargo_capacity</th>
-            <th>consumables</th>
             <th>hyperdrive_rating</th>
             <th>MGLT</th>
             <th>starship_class</th>
-            <th>calc</th>
+            <th>score</th>
           </tr>
           {% for star in starships %}
           <tr>
           <th>{{star.name}} </th>
           <th>{{star.model}} </th>
-          <th>{{star.manufacturer}} </th>
           <th>{{star.cost_in_credits}} </th>
           <th>{{star.length}} </th>
           <th>{{star.max_atmosphering_speed}} </th>
           <th>{{star.crew}} </th>
           <th>{{star.passengers}} </th>
-          <th>{{star.cargo_capacity}} </th>
-          <th>{{star.consumables}} </th>
           <th>{{star.hyperdrive_rating}} </th>
           <th>{{star.MGLT}} </th>
           <th>{{star.starship_class}} </th>

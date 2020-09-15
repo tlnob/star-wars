@@ -1,40 +1,13 @@
 {% extends "base_layout.html" %}
 
 {% block style %}
-table, th, td {
-    border: 0.5px solid gray;
-    border-collapse: collapse;
-    
-  }
-
-
-  th, td {
-    padding: 15px;
-  }
-
-
-
-  .table-header{
-    font-weight: bold;
-    color: yellow;
-  }
-
-  th {
-    text-align: center;
-    font-weight: normal;
-  }
-
   form {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 20px;
+    margin: 20px 20px 20px 90px;
     width: 500px;
-  }
-
-  div > form {
-
   }
 
   input {
@@ -49,9 +22,50 @@ table, th, td {
     width: 120px;
   }
 
-  a {
+  .a-page {
+    margin: 20px;
+    text-decoration: none;
+  }
+
+  a:hover {
     color: white;
-    text-size: 15px;
+  }
+
+  .links {
+    margin: 5px;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .find-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .submit{
+    background-color: black;
+    border: none;
+    color: yellow;
+  }
+
+  .text-submit{
+    border-radius: 3px;
+  }
+
+  .submit:hover{
+    color: white;
+    cursor: pointer;
+  }
+
+  select {
+    background-color: white;
   }
 
 {% endblock %}
@@ -59,14 +73,15 @@ table, th, td {
 {% block content %}
 
 <div class="">
-  <div>
-    <p>Find by Starship name: X-wing, Imperial shuttle</p>
-    <p>Find by Vehicle name: Imperial Speeder Bike, Snowspeeder, Tribubble bongo</p>
-    <p>Find by Planet name: Tatooine, Naboo, Naboo</p>
-    <p>Find by Film name: The Phantom Menace, Revenge of the Sith</p>
+  <div class="info">
+    <div class="find-info">
+      <p>Find by Starship name: X-wing, Imperial shuttle, etc</p>
+      <p>Find by Vehicle name: Imperial Speeder Bike, Snowspeeder, Tribubble bongo, etc</p>
+      <p>Find by Planet name: Tatooine, Naboo, Eriadu, etc</p>
+      <p>Find by Film name: The Phantom Menace, Revenge of the Sith, etc</p>
+    </div>
   <form class="form" action="" method="post">
     <div class="select-box">
-      <label for="type">filter</label>
       <tr>
         <td>
           <select name="type">
@@ -79,16 +94,22 @@ table, th, td {
     </tr>
   </div>
     <div class="input-submit">
-        <input type="text" name="filter">
-        <input type="submit">
+        <input class="text-submit" type="text" name="filter">
+        <input class="submit" type="submit">
     </div>
     <div>
         {% if filtered %}
-          <a href="/">show all</a>
+          <a class="a-page" href="/{{page}}">clear search</a>
         {% endif %}
     </div>
 </form>
+  <div class="links">
+    {%if character %}
+    <a class="a-page" href="/{{page | int + 1}}">see page {{page | int + 1}}</a>
+    {% endif %}
+  </div>
 </div>
+
   <div class="switch">
       <table style="width:100%;">
           <tr class="table-header">
@@ -105,9 +126,7 @@ table, th, td {
             <th>{{char.gender}} </th>
           </tr>
           {% endfor %}
-      {%if character %}
-      <a href="/{{page | int + 1}}">see page {{page | int + 1}}</a>
-      {% endif %}
+
       
   </div>
 </div>

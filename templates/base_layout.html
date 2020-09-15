@@ -20,6 +20,48 @@
             display: flex;
             justify-content: center;
         }
+
+        .pages{
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+            font-size: 18px;
+        }
+
+        a {
+            margin: 10px;
+            color: yellow;
+        }
+
+        table, th, td {
+            border: 0.5px solid gray;
+            border-collapse: collapse;
+        }
+
+        .switch{
+            margin: 30px;
+        }
+
+        th, td {
+        padding: 15px;
+        }
+
+
+        .table-header{
+        font-size: 17px;
+        font-weight: bold;
+        background-color: #292824;
+        }
+
+        .switch{
+        margin: 30px;
+        }
+
+        th {
+        text-align: center;
+        font-weight: normal;
+        }
+
     </style>
     <style>
         {% block style %}
@@ -32,19 +74,22 @@
 <body class="">
 
 <div class="">
-    <div class="">
+
         <div class="header">
             <h1 class="">Star Wars</h1>
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/1200px-Star_Wars_Logo.svg.png"/>
         </div>
-    </div>
+        <div class="pages">
+            <a href="/starships">starships</a>
+            <a href="/1">characters</a>
+        </div>
     <div class="">
         <div class="">
             {% block content %}
 
             {% endblock %}
         </div>
-    </div>
+    
 </div>
 
 
