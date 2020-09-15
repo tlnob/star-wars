@@ -6,7 +6,7 @@ from .vehicles import Vehicles
 from .planets import Planets
 
 class Character(me.Document):
-    name = me.StringField(required=True, unique=True)
+    name = me.StringField(required=True)
     height = me.StringField(required=True)
     mass = me.StringField(required=True)
     birth_year = me.StringField(required=True)

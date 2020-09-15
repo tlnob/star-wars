@@ -2,12 +2,13 @@
 
 This project retrieves info from the star wars swapi.api
 
+
 Chosen stack:
     - Python (Flask and Jinja)
     - Mongodb
     - Docker / Docker-Compose
 
-Run the project:
+## Run the project:
 ```bash
 git clone https://github.com/tlnob/star-wars.git
 ```
@@ -17,8 +18,10 @@ cd star-wars
 ```
 
 ```bash
-docker compose build && docker compose up
+docker-compose up
 ```
+- The Docker containers run on ports 5000 and 27017, so they must be available
+
 ## Routes:
 
 ### populate database 

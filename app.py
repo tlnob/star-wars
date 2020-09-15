@@ -8,7 +8,7 @@ from populatedb import *
 app = Flask(__name__)
 
 def init_db():
-    connection = connect('star-wars-app')
+    connection = connect(db='star-wars-app', host='db', port=27017)
     return connection
 
 def paginate(page_num):
