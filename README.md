@@ -30,7 +30,7 @@ This should take a while, there are lots of data to be loaded
 
 ### ui routes:
 ##### - character info, page starts from 1
- - localhost:5000/<page>
+ - localhost:5000/`page`
 ##### - starships info:
   - localhost:5000/starships
 
