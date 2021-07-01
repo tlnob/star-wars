@@ -3,7 +3,7 @@ import json
 from mongoengine import connect
 import requests
 from models import Character
-from populatedb import *
+from populate_db import *
 
 app = Flask(__name__)
 
